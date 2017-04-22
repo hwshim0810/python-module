@@ -24,8 +24,9 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^welcome/', views.welcome),
     url(
-        r'^msg/',
+        r'^msg/$',
         views.certify,
         name='msg'
     ),
+    url(r'^msg/(?P<msg_id>[0-9]+)/$', views.cer_form),
 ]
