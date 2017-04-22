@@ -15,7 +15,6 @@ def sms_send(to_num, r_num):
     params['text'] = str(r_num)
 
     cool = Message(api_key, api_secret)
-    print(params)
     try:
         res = cool.send(params)
         res['r_num'] = r_num
