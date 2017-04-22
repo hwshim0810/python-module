@@ -16,4 +16,4 @@ def get_secret(setting, key=key):
 
 
 def gen_num(n):
-    return str(int(random.random() * pow(10, n)))
+    return str(random.random() * pow(10, n))[:6]
