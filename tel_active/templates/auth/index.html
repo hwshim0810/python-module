@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %} Module {% endblock title %}
+{% block content %}
+<div class="row">
+    <form action="" method="POST">
+        <div class="col-xs-12">
+            {% csrf_token %}
+            <input id="phone" name="phone" class="form-control" placeholder="휴대폰 번호를 입력하세요" required="required" autofocus="autofocus">
+        </div>
+        <div class="col-xs-6">
+            <button type="submit" class="btn btn-info col-xs-4 form-control">입력</button>
+        </div>
+        <div class="col-xs-6">
+            <a href="/" class="btn btn-danger col-xs-4 form-control">취소</a>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="{% static 'js/util.js' %}"></script>
+{% endblock content %}

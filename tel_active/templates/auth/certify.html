@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %} 인증확인 {% endblock title %}
+{% block content %}
+<div class="row">
+    <form action="/msg/" method="POST">{% csrf_token %}
+        <div class="col-xs-12">
+            <input id="phone" name="msg" class="form-control" placeholder="인증번호를 입력하세요" required="required" autofocus="autofocus">
+            <input name="to_num" type="hidden" value="{{ to_num }}">
+        </div>
+        <div class="col-xs-6">
+            <button type="submit" class="btn btn-success col-xs-4 form-control">인증</button>
+        </div>
+        <div class="col-xs-6">
+            <a href="/" class="btn btn-danger col-xs-4 form-control">취소</a>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="{% static 'js/util.js' %}"></script>
+{% endblock content %}
