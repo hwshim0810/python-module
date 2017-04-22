@@ -1,0 +1,7 @@
+{
+  "SECRET_KEY": "보안변수",
+  "api_key": "insert sms apikey",
+  "api_secret": "insert sms api secretkey",
+  "from_num": "insert send number",
+  "crypto_key": "insert crypto key ex)abcdeghkmnorstvwxyz1256"
+}
