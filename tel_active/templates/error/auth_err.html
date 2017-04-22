@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<script type="text/javascript">
+    alert('인증번호가 틀렸습니다.');
+    location.href = '/msg/' + {{ id }};
+</script>
+{% endblock content %}
