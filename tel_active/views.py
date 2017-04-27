@@ -9,7 +9,6 @@ from sdk.exceptions import CoolsmsException
 # Import regex module
 import re
 # Import Util module
-from operator import eq
 from sms_module.util import gen_num, get_secret
 from sms_module.crypto import AESCipher
 
@@ -52,28 +51,24 @@ def index(request):
 
 def certify(request):
     msg = request.POST['msg']
-    db_msg = AuthInfo.objects.get(phone=request.POST['to_num'])
+    info = AuthInfo.get_info_by_num(request.POST['to_num'])
 
-    # 인증은 3회까지
-    if db_msg.counter > 1:
-        db_msg.delete()
+    # 유효인증횟수 검사
+    if info.validate_count():
         return render(request, 'error/count_err.html')
-    # DB정보와 입력정보 대조하여 인증여부 결정
-    if eq(msg, AESCipher(key).decrypt(str(db_msg.msg))):
-        db_msg.delete()
+
+    # 입력정보와 대조검사
+    res = info.validate_info(msg)
+    if res['res']:
         return HttpResponseRedirect('/welcome')
-    # 틀렸을 경우 기회차감
     else:
-        db_msg.counter = db_msg.counter + 1
-        db_msg.save()
-        return render(request, 'error/auth_err.html', {'id': db_msg.id})
+        return render(request, 'error/auth_err.html', {'id': res['id']})
 
 
 # 인증번호 틀렸을 경우 재시도를 위한 Form
 def cer_form(request, msg_id):
-    db_msg = AuthInfo.objects.get(id=msg_id)
-    return render(request, 'auth/certify.html', {'to_num': db_msg.phone})
+    return render(request, 'auth/certify.html', {'to_num': AuthInfo.get_info_by_id(msg_id).phone})
 
-
+# 성공화면
 def welcome(request):
     return render(request, 'auth/auth_complete.html')
