@@ -6,7 +6,7 @@
     <form action="/msg/" method="POST">{% csrf_token %}
         <div class="col-xs-12">
             <input id="phone" name="msg" class="form-control" placeholder="인증번호를 입력하세요" required="required" autofocus="autofocus">
-            <input name="to_num" type="hidden" value="{{ to_num }}">
+            <input name="to_num" type="hidden" value="{{ phone }}">
         </div>
         <div class="col-xs-6">
             <button type="submit" class="btn btn-success col-xs-4 form-control">인증</button>
