@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils import timezone
+# Import regex module
+import re
 # Import Util module
 from operator import eq
 from sms_module.util import get_secret
@@ -21,6 +23,20 @@ class AuthInfo(models.Model):
     @classmethod
     def get_info_by_num(cls, phone):
         return AuthInfo.objects.get(phone=phone)
+
+    @classmethod
+    def validate_phone(cls, phone):
+        return not bool(re.search(r"^[0-9]*$", phone)) or len(phone) <= 10
+
+    @classmethod
+    def insert_info(cls, res, r_num, phone):
+        if int(res["success_count"]) > 0:
+            # 인증번호 암호화 후 DB저장
+            r_num = AESCipher(key).encrypt(r_num)
+            AuthInfo(phone=phone, msg=r_num).publish()
+            return True
+        else:
+            return False
 
     def validate_count(self):
         # 인증은 3회까지

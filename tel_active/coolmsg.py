@@ -24,3 +24,13 @@ def sms_send(to_num, r_num):
         print("Error Code : %s" % e.code)
         print("Error Message : %s" % e.msg)
         raise e
+
+
+def send(phone, r_num):
+    try:
+        res = sms_send(phone, r_num)
+    except CoolsmsException:
+        return {'res': False}
+
+    res['res'] = True
+    return res
